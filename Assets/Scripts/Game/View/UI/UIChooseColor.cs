@@ -17,25 +17,40 @@ namespace Game
 
     public class UIChooseColor : MonoSingleton<UIChooseColor>
     {
-        public void OnChooseColor(Button selectedButton)
+        private Color _selectedColor;
+
+        public void OnSelectColor(Button selectedButton)
         {
-            var selectedColor = selectedButton.GetComponent<Image>().color;
-            this.GetModel<PlayerModel>().PlayerColor.Value = selectedColor;
+            _selectedColor = selectedButton.GetComponent<Image>().color;
 
             foreach (Transform child in SceneStart.Instance.GenderShowCase.transform)
             {
                 if (child.gameObject.activeInHierarchy)
                 {
-                    child.Find("Role").GetChild(0).GetComponent<MeshRenderer>().material.color = selectedColor;
+                    child.Find("Role").GetChild(0).GetComponent<MeshRenderer>().material.color = _selectedColor;
                     break;
                 }
             }
+        }
+
+        public void OnChooseColor(Button selectedButton)
+        {
+            this.GetModel<PlayerModel>().PlayerColor.Value = _selectedColor;
             
             SceneStart.Instance.UIDialog.EnableGameObject();
-
+            SceneStart.Instance.GenderShowCase.DisableGameObject();
+            
             this.DisableGameObject();
+
+            var selectedCase = SceneStart.Instance.GenderShowCase.SelectedCase;
+            var selectedRole = selectedCase.Find("Role");
+            
+            selectedRole.SetParent(Player.Instance.PlayerModel);
+
+            selectedRole.SetLocalPosition(new Vector3(0, -Player.Instance.PlayerModel.parent.localPosition.y, 0));
+            selectedRole.SetLocalRotation(Quaternion.Euler(0, 180, 0));
         }
-        
+
         protected override IArchitecture _Architecture { get => Game.Architecture; }
     }
 }

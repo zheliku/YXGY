@@ -18,27 +18,37 @@ namespace Game
 
     public class RoleShowCase : AbstractView
     {
-        private void Awake()
-        {
-            // HideRoles();
-        }
+        public Transform SelectedCase;
 
-        public void OnChooseGender(Transform selectCase)
+        public void OnChooseGender(Transform selectedCase)
         {
-            var modelName = selectCase.Find("Role").GetChild(0).name;
+            SelectedCase = selectedCase;
+            
+            var modelName = selectedCase.Find("Role").GetChild(0).name;
+
+            selectedCase.Find("UI").DisableGameObject();
 
             this.GetModel<PlayerModel>().IsMale = modelName == "man";
 
             HideRoles();
 
-            selectCase.EnableGameObject();
+            selectedCase.EnableGameObject();
 
             UIChooseColor.Instance.EnableGameObject();
         }
 
-        public void OnChooseBoy(Transform selectCase)
+        public void OnChooseBoy(Transform selectedCase)
         {
-            selectCase.Find("Role").SetParent(Player.Instance.PlayerModel);
+            // selectCase.Find("Role").SetParent(Player.Instance.PlayerModel);
+
+            ResKit.LoadSceneAsync("Scene 1", () =>
+            {
+            });
+        }
+
+        public void OnChooseGirl(Transform selectedCase)
+        {
+            // selectCase.Find("Role").SetParent(Player.Instance.PlayerModel);
 
             ResKit.LoadSceneAsync("Scene 1", () =>
             {
@@ -72,7 +82,7 @@ namespace Game
                 SceneStart.Instance.GirlShowCase.EnableGameObject();
             }
 
-            SceneStart.Instance.GenderShowCase.DisableGameObject();
+            // SceneStart.Instance.GenderShowCase.DisableGameObject();
         }
 
         protected override IArchitecture _Architecture { get => Game.Architecture; }

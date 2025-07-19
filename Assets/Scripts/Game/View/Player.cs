@@ -24,10 +24,10 @@ namespace Game
         {
             DontDestroyOnLoad(gameObject);
 
-            this.GetModel<PlayerModel>().PlayerColor.Register((oldValue, newValue) =>
-            {
-                PlayerModel.GetComponent<MeshRenderer>().material.color = newValue;
-            }).UnRegisterWhenGameObjectDestroyed(this);
+            // this.GetModel<PlayerModel>().PlayerColor.Register((oldValue, newValue) =>
+            // {
+            //     PlayerModel.GetComponent<MeshRenderer>().material.color = newValue;
+            // }).UnRegisterWhenGameObjectDestroyed(this);
             
             // AudioKit.PlayMusic("BgMusic");
         }

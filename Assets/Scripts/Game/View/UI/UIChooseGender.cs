@@ -8,6 +8,7 @@
 
 using Framework.Toolkits.FluentAPI;
 using Framework.Toolkits.SingletonKit;
+using UnityEngine;
 
 namespace Game
 {
@@ -20,8 +21,6 @@ namespace Game
             this.GetModel<PlayerModel>().IsMale = isMale;
 
             this.DisableGameObject();
-
-            // RoleShowCase.Instance.ShowRoles();
         }
         
         protected override IArchitecture _Architecture { get => Game.Architecture; }
