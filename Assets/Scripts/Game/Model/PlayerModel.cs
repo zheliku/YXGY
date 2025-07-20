@@ -7,7 +7,9 @@ namespace Game
 
     public class PlayerModel : AbstractModel
     {
-        public BindableProperty<Color> PlayerColor { get; set; } = new(Color.white);
+        public Color SelfColor { get; set; } = Color.white;
+        
+        public Color ChildColor { get; set; } = Color.white;
         
         public bool IsMale { get; set; } = true;
         

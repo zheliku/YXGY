@@ -6,16 +6,16 @@
 // @Copyright  Copyright (c) 2025, zheliku
 // ------------------------------------------------------------
 
+
 namespace Framework.Toolkits.BindableKit.Editor
 {
     using System;
     using System.Diagnostics;
-    using Microsoft.Win32;
     using Sirenix.OdinInspector;
+    using Microsoft.Win32;
     using Sirenix.OdinInspector.Editor;
     using UnityEditor;
     using UnityEngine;
-    using Debug = UnityEngine.Debug;
 
     public class PlayerPrefsWindow : OdinEditorWindow
     {
@@ -35,10 +35,11 @@ namespace Framework.Toolkits.BindableKit.Editor
             string productName = PlayerSettings.productName;
 
             // 构造注册表路径（Windows平台）
-            var registryLastKey  = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit";
+            var registryLastKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit";
             var registryLocation = $"HKEY_CURRENT_USER\\Software\\Unity\\UnityEditor\\{companyName}\\{productName}";
 
-            Registry.SetValue(registryLastKey, "LastKey", registryLocation); // Set LastKey value that regedit will go directly to
+            Registry.SetValue(registryLastKey, "LastKey",
+                registryLocation); // Set LastKey value that regedit will go directly to
 
             // 调用regedit并定位到指定路径
             Process.Start("regedit.exe");
@@ -84,9 +85,11 @@ namespace Framework.Toolkits.BindableKit.Editor
 
                 // From Unity 5.5 editor player prefs moved to a specific location
                 var registryKey =
-                    Registry.CurrentUser.OpenSubKey("Software\\Unity\\UnityEditor\\" + companyName + "\\" + productName);
+                    Registry.CurrentUser.OpenSubKey("Software\\Unity\\UnityEditor\\" + companyName + "\\" +
+                                                    productName);
 #else
-                Microsoft.Win32.RegistryKey registryKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\" + companyName + "\\" + productName);
+                Microsoft.Win32.RegistryKey registryKey =
+ Microsoft.Win32.Registry.CurrentUser.OpenSubKey("Software\\" + companyName + "\\" + productName);
 #endif
 
                 // Parse the registry if the specified registryKey exists
@@ -109,7 +112,7 @@ namespace Framework.Toolkits.BindableKit.Editor
 
                         // Get the value from the registry
                         var ambiguousValue = registryKey.GetValue(valueNames[i]);
-                        var valueKind      = registryKey.GetValueKind(valueNames[i]);
+                        var valueKind = registryKey.GetValueKind(valueNames[i]);
 
                         // Unfortunately floats will come back as an int (at least on 64 bit) because the float is stored as
                         // 64 bit but marked as 32 bit - which confuses the GetValue() method greatly! 
@@ -126,7 +129,7 @@ namespace Framework.Toolkits.BindableKit.Editor
                         else if (valueKind == RegistryValueKind.Binary)
                         {
                             // On Unity 5 a string may be stored as binary, so convert it back to a string
-                            ambiguousValue = System.Text.Encoding.Default.GetString((byte[]) ambiguousValue);
+                            ambiguousValue = System.Text.Encoding.Default.GetString((byte[])ambiguousValue);
                         }
 
                         // Assign the key and value into the respective record in our output array

@@ -18,6 +18,12 @@ namespace Game
         [HierarchyPath("/UIDialog")]
         public UIDialog UIDialog;
 
+        [HierarchyPath("/UIChooseColor (Self)")]
+        public UIChooseColor UIChooseSelfColor;
+        
+        [HierarchyPath("/UIChooseColor (Child)")]
+        public UIChooseColor UIChooseChildColor;
+
         private void Awake()
         {
             this.BindHierarchyComponent();

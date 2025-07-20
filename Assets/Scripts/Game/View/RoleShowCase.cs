@@ -34,25 +34,39 @@ namespace Game
 
             selectedCase.EnableGameObject();
 
-            UIChooseColor.Instance.EnableGameObject();
+            selectedCase.SetLocalPosition(-2.4f);
+
+            SceneStart.Instance.UIChooseSelfColor.EnableGameObject();
         }
 
         public void OnChooseBoy(Transform selectedCase)
         {
-            // selectCase.Find("Role").SetParent(Player.Instance.PlayerModel);
+            SelectedCase = selectedCase;
+            
+            selectedCase.Find("UI").DisableGameObject();
+            
+            HideRoles();
 
-            ResKit.LoadSceneAsync("Scene 1", () =>
-            {
-            });
+            selectedCase.EnableGameObject();
+            
+            selectedCase.SetLocalPosition(-2.4f);
+            
+            SceneStart.Instance.UIChooseChildColor.EnableGameObject();
         }
 
         public void OnChooseGirl(Transform selectedCase)
         {
-            // selectCase.Find("Role").SetParent(Player.Instance.PlayerModel);
+            SelectedCase = selectedCase;
+            
+            selectedCase.Find("UI").DisableGameObject();
+            
+            HideRoles();
 
-            ResKit.LoadSceneAsync("Scene 1", () =>
-            {
-            });
+            selectedCase.EnableGameObject();
+            
+            selectedCase.SetLocalPosition(-2.4f);
+            
+            SceneStart.Instance.UIChooseChildColor.EnableGameObject();
         }
 
         public void ShowRoles()
