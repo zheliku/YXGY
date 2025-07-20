@@ -51,11 +51,14 @@ namespace Game
 
             var selectedCase = SceneStart.Instance.GenderShowCase.SelectedCase;
             var selectedRole = selectedCase.Find("Role");
+            
+            Player.Instance.SelfModel = selectedRole;
+            selectedRole.SetParent(Player.Instance.PlayerController);
+            selectedRole.Name("Self");
+            selectedRole.DisableGameObject();
 
-            selectedRole.SetParent(Player.Instance.PlayerModel);
-
-            selectedRole.SetLocalPosition(new Vector3(0, -Player.Instance.PlayerModel.parent.localPosition.y, 0));
-            selectedRole.SetLocalRotation(Quaternion.Euler(0, 180, 0));
+            selectedRole.SetLocalPositionIdentity();
+            selectedRole.SetLocalRotationIdentity();
         }
 
         public void OnChooseChildColor(Button selectedButton)
@@ -67,8 +70,16 @@ namespace Game
             var showCase = this.GetModel<PlayerModel>().IsMale
                 ? SceneStart.Instance.BoyShowCase
                 : SceneStart.Instance.GirlShowCase;
+            var selectedRole = showCase.SelectedCase.Find("Role");
+            
+            Player.Instance.ChildModel = selectedRole;
+            selectedRole.SetParent(Player.Instance.PlayerController);
+            selectedRole.Name("Child");
+            selectedRole.DisableGameObject();
             
             showCase.DisableGameObject();
+            
+            SceneStart.Instance.UIChoosePos.EnableGameObject();
         }
 
         protected override IArchitecture _Architecture { get => Game.Architecture; }
